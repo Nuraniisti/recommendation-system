@@ -305,7 +305,6 @@ Top 10 Rekomendasi Buku untuk User 243
 | 10 | 0553582747 | *From the Corner of His Eye*           | Dean Koontz        | 2.4  |
 
 
-
 ## Kesimpulan
 Sistem rekomendasi berhasil memberikan saran buku personalisasi berdasarkan kesamaan dengan pengguna lain. Ini menunjukkan bahwa pendekatan user-based collaborative filtering berjalan dengan baik.
 
