@@ -291,18 +291,19 @@ contoh rekomendasi buku untuk satu pengguna tertentu dengan parameter fungsi :
 Menampilkan contoh rekomendasi   
 Top 10 Rekomendasi Buku untuk User 243
 
-| #  | Judul Buku                       | Penulis            | Skor Prediksi |
-| -- | -------------------------------- | ------------------ | ------------- |
-| 1  | *The Testament*                  | John Grisham       | 7.4           |
-| 2  | *Beloved*                        | Toni Morrison      | 3.2           |
-| 3  | *Wild Animus*                    | Rich Shapero       | 2.8           |
-| 4  | *Airframe*                       | Michael Crichton   | 2.8           |
-| 5  | *Timeline*                       | Michael Crichton   | 2.8           |
-| 6  | *To Kill a Mockingbird*          | Harper Lee         | 2.5           |
-| 7  | *Seabiscuit: An American Legend* | Laura Hillenbrand  | 2.5           |
-| 8  | *Pigs in Heaven*                 | Barbara Kingsolver | 2.4           |
-| 9  | *I'll Be Seeing You*             | Mary Higgins Clark | 2.4           |
-| 10 | *From the Corner of His Eye*     | Dean Koontz        | 2.4           |
+| No | ISBN       | Judul Buku                             | Penulis            | Skor |
+| -- | ---------- | -------------------------------------- | ------------------ | ---- |
+| 1  | 0440234743 | *The Testament*                        | John Grisham       | 7.4  |
+| 2  | 0452264464 | *Beloved (Plume Contemporary Fiction)* | Toni Morrison      | 3.2  |
+| 3  | 0971880107 | *Wild Animus*                          | Rich Shapero       | 2.8  |
+| 4  | 0345402871 | *Airframe*                             | Michael Crichton   | 2.8  |
+| 5  | 0345417623 | *Timeline*                             | Michael Crichton   | 2.8  |
+| 6  | 0446310786 | *To Kill a Mockingbird*                | Harper Lee         | 2.5  |
+| 7  | 0449005615 | *Seabiscuit: An American Legend*       | Laura Hillenbrand  | 2.5  |
+| 8  | 0060168013 | *Pigs in Heaven*                       | Barbara Kingsolver | 2.4  |
+| 9  | 0671888587 | *I'll Be Seeing You*                   | Mary Higgins Clark | 2.4  |
+| 10 | 0553582747 | *From the Corner of His Eye*           | Dean Koontz        | 2.4  |
+
 
 
 ## Kesimpulan
