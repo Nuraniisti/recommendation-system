@@ -288,6 +288,31 @@ contoh rekomendasi buku untuk satu pengguna tertentu dengan parameter fungsi :
 | `books`              | DataFrame berisi metadata buku (ISBN, Judul, Penulis)      |
 | `n`                  | Jumlah buku rekomendasi yang ingin ditampilkan             |
 
+Menampilkan contoh rekomendasi   
+Rekomendasi untuk pengguna 243:
+          ISBN                            Book-Title         Book-Author  \
+18  0440234743                         The Testament        John Grisham   
+19  0452264464  Beloved (Plume Contemporary Fiction)       Toni Morrison   
+26  0971880107                           Wild Animus        Rich Shapero   
+27  0345402871                              Airframe    Michael Crichton   
+28  0345417623                              Timeline    MICHAEL CRICHTON   
+37  0446310786                 To Kill a Mockingbird          Harper Lee   
+38  0449005615        Seabiscuit: An American Legend   LAURA HILLENBRAND   
+39  0060168013                        Pigs in Heaven  Barbara Kingsolver   
+45  0671888587                    I'll Be Seeing You  Mary Higgins Clark   
+46  0553582747            From the Corner of His Eye         Dean Koontz   
+
+    score  
+18    7.4  
+19    3.2  
+26    2.8  
+27    2.8  
+28    2.8  
+37    2.5  
+38    2.5  
+39    2.4  
+45    2.4  
+46    2.4 
 
 ## Kesimpulan
 Sistem rekomendasi berhasil memberikan saran buku personalisasi berdasarkan kesamaan dengan pengguna lain. Ini menunjukkan bahwa pendekatan user-based collaborative filtering berjalan dengan baik.
