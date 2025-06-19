@@ -31,7 +31,7 @@ Di era digital, banyak platform menyediakan jutaan judul buku dari berbagai genr
    
    
 Title : Book Recommendation Dataset
-Source : Kaggle (https://www.kaggle.com/datasets/bharath011/heart-disease-classification-dataset/data)   
+Source : Kaggle (https://www.kaggle.com/datasets/arashnic/book-recommendation-dataset)   
 Owner : arashnic / Möbius    
 License : CC0: Public Domain    
 Visibility : Publik    
