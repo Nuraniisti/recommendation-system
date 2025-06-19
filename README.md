@@ -20,7 +20,7 @@ Di era digital, banyak platform menyediakan jutaan judul buku dari berbagai genr
 - Mengoptimalkan waktu pencarian buku dan penggunaan platform.
 
 ### Solution Statements
-- Menerapkan pendekatan collaborative filtering untuk merekomendasikan buku.
+- Menerapkan pendekatan user-based collaborative filtering untuk merekomendasikan buku.
 
 - Menggunakan data seperti rating buku, user dan genre.
 
@@ -95,6 +95,11 @@ Dataset yang digunakan adalah dataset Book-Crossing, yang digunakan untuk memban
 | 2   | Location | 278858 non-null | object  |
 | 3   | Age      | 168096 non-null | float64 |
 
+insight :    
+- Semua kolom pada dataset books bertipe object, termasuk Year-Of-Publication yang seharusnya numerik.
+- ketiga dataset memiliki jumlah data yang besar, namun juga terdapat missing value tertama pada kolom age di dataset users.
+
+
 ## Exploratory Data Analysis
 **Informasi statistik**
 
@@ -137,12 +142,29 @@ Dataset yang digunakan adalah dataset Book-Crossing, yang digunakan untuk memban
 | 75%       | 209,143.75000 | 44.00000      |
 | Max       | 278,858.00000 | 244.00000     |
 
+insight :    
+- Dengan 271.360 ISBN unik, dataset mencakup koleksi buku yang sangat beragam. Namun, hanya 242.135 judul unik menunjukkan beberapa buku memiliki duplikat judul (misalnya, edisi berbeda dari "Selected Poems" muncul 27 kali). Ini bisa memengaruhi rekomendasi jika tidak dibedakan berdasarkan ISBN.
+
+- Agatha Christie (632 buku) adalah penulis paling produktif, menunjukkan popularitas genre misteri/kriminal. Ini bisa menjadi target rekomendasi untuk penggemar genre tersebut.
+
+- Harlequin (7.535 buku) mendominasi sebagai penerbit, kemungkinan karena fokus pada novel romansa. Ini menunjukkan potensi segmentasi pengguna yang menyukai genre romansa.
+
+- Tahun 2002 adalah yang paling umum (13.903 buku), menunjukkan dataset ini berfokus pada buku-buku modern (akhir 1990-an hingga awal 2000-an)
+
+- Rata-rata usia pengguna adalah ~34,75 tahun (median 32), dengan standar deviasi 14,43, menunjukkan pengguna beragam dari usia muda (25% di bawah 24) hingga lebih tua (75% di bawah 44).
+
+- Nilai Age minimum 0 dan maksimum 244 tidak realistis, menunjukkan outlier atau kesalahan input. Ini perlu dibersihkan
+
+
 **Data duplikat**
 |  dataset  |     data duplikat   |
 |-----------|---------------------|
 |  Books    |          0          |
 |  Ratings  |          0          |
 |  Users    |          0          |
+
+insight :    
+Tidak ditemukan data duplikat
 
 **Missing Value**
 
@@ -172,23 +194,106 @@ Dataset yang digunakan adalah dataset Book-Crossing, yang digunakan untuk memban
 | Location | 0              |
 | Age      | 110,762        |
 
+insight :    
+- pada dataset books, kolom Book-Title memiliki 2 missing value, Publisher memiliki 2 missing value dan Image-URL-L memiliki 3 missing value
+- pada dataset users, kolom age memiliki 110.762 missing value dimana angka ini sangat besar.
+
 
 ### Exploratory Data Analysis - Univariate Analysis
 
-![image](https://github.com/user-attachments/assets/77500cc7-4df3-4637-b7f4-3a337e01870e)     
+![image](https://github.com/user-attachments/assets/f0072387-f2aa-471c-83ab-b8d9ca175e0c)
 
-![image](https://github.com/user-attachments/assets/904e45fc-1f90-492d-ad33-5115a107b173)
+insight :    
+- rating 0 menunjukkan mayoritas adalah rating implisit (pengguna melihat tanpa rating eksplisit)
+- Rating 4, 5, dan 6 sangat sedikit, menunjukkan pengguna jarang memberikan rating netral, mungkin karena bias subjektivitas.
+- Peningkatan rating 6-10 menunjukkan segmen pengguna aktif dengan preferensi kuat, cocok untuk rekomendasi berbasis genre.
+- Banyaknya rating 0 menunjukkan pengguna pasif, sementara rating tinggi (8-10) menawarkan peluang promosi buku populer.
 
-![image](https://github.com/user-attachments/assets/c0b30f50-a8bd-450b-8679-3cbeb5201b8d)
+![image](https://github.com/user-attachments/assets/47f2ae03-873e-4cf6-b3cf-ec107e54fc8f)
+
+insight :    
+- Mayoritas pengguna terkonsentrasi di sekitar usia 50, menunjukkan puncak pada kelompok usia ini.
+- Sangat sedikit pengguna di atas atau di bawah usia 50, dengan jumlah yang menurun drastis di luar rentang 50-100.
+- Jumlah total pengguna tampaknya paling tinggi sekitar 40.000, dengan penurunan tajam di kedua sisi puncak.
+
+Analisis kolom Year-Of-Publication dari dataset books menunjukkan :        
+- Tahun 2002 memiliki jumlah buku terbanyak (13.903), diikuti oleh 2001 (13.715) dan 1999 (13.414). Tren menunjukkan penurunan jumlah buku seiring mundur ke tahun yang lebih lama, dengan 1994 memiliki jumlah terendah di antara 10 teratas (8.857).
+- menunjukkan bahwa sebagian besar buku dalam dataset diterbitkan pada awal 2000-an, dengan puncak pada tahun 2002.
+
+![image](https://github.com/user-attachments/assets/db701122-7357-46fc-a620-d1598fd575eb)
+
+insight :    
+- sebagian besar buku dalam dataset diterbitkan pada awal 2000-an.
 
 
 
 ### Exploratory Data Analysis - Multivariate Analysis
 
-![image](https://github.com/user-attachments/assets/7268a8f1-4934-4031-b416-d72e10717d76)
+Hubungan antara usia pengguna (Age) dan rating buku (Book-Rating)
 
-![image](https://github.com/user-attachments/assets/0e75fbce-9440-4a94-abfe-2854ac83ee9b)
+![image](https://github.com/user-attachments/assets/2147c456-a23e-47f5-b93a-883f23b6d554)
+
+insight :    
+- Banyak pengguna memberi rating 0
+- Di atas usia 100, data terlihat sangat jarang — kemungkinan besar adalah outlier atau kesalahan input
+- Titik-titik tersebar merata dari rating 0 hingga 10 di hampir semua kelompok usia. Artinya, usia pengguna tidak secara signifikan memengaruhi kecenderungan memberi rating rendah atau tinggi.
+- Meskipun ada sebaran luas, rating 8–10 tetap muncul konsisten di semua kelompok usia.
+
+![image](https://github.com/user-attachments/assets/1d83ffd2-69f2-47b6-a3d3-1faa7e3b868d)
+
 
 
 ## Data Preparation
+Melakukan beberapa langkah untuk menangani nilai hilang (missing values) dalam dataset books dan menampilkan informasi setelahnya.   
+- Mengganti nilai hilang di kolom 'Book-Author' dengan 'Unknown Author'.
+- Mengganti nilai hilang di kolom 'Publisher' dengan 'Unknown Publisher'.
+- Mengganti nilai hilang di kolom 'Image-URL-L' dengan string kosong ('').
+- Mengganti nilai hilang di kolom 'Year-Of-Publication' dengan nilai median.
 
+Melakukan beberapa langkah untuk menangani nilai hilang (missing values) dalam dataset users dan menampilkan informasi setelahnya.   
+- Dengan mengisi baris yang hilang dengan nilai median
+
+Melakukan penyaringan pada dataset ratings untuk mendapatkan buku-buku populer berdasarkan jumlah rating. Dengan menentukan ambang batas minimum jumlah rating, yaitu 50.   
+
+Melakukan penyaringan lebih lanjut pada dataset ratings_filtered untuk mendapatkan pengguna aktif berdasarkan jumlah rating yang mereka berikan.   
+
+Menggabungkan dataset ratings_filtered dengan subset dari dataset books berdasarkan kolom 'ISBN' untuk membuat dataset akhir bernama final_data.   
+
+Membuat matriks pengguna-buku berdasarkan dataset final_data menggunakan fungsi pivot_table.  
+
+
+## Modeling   
+Menerapkan dekomposisi nilai singular terpotong (Truncated SVD) pada matriks user_book_matrix untuk reduksi dimensi.    
+
+Menghitung kesamaan antar pengguna (cosine_similiarity) berdasarkan matriks yang telah direduksi dan menyimpannya dalam bentuk DataFrame.   
+
+Membagi data menjadi data pelatihan (train_data) dan data pengujian (test_data) dengan rasio 80:20 dan menerapkan transformasi SVD pada data pelatihan dan pengujian.   
+
+## Model Evaluation  
+Merekonstruksi matriks prediksi dari hasil reduksi dimensi.    
+
+Menghitung performa model dengan Root Mean Squared Error (RMSE), yaitu ukuran seberapa jauh prediksi model dari nilai sebenarnya.    
+= Model RMSE: 0.9564    
+
+insight :    
+Angka 0.9564 mengindikasikan bahwa model mampu memprediksi rating yang cukup mendekati kenyataan, sehingga model bisa digunakan sebagai dasar sistem rekomendasi.     
+
+contoh rekomendasi buku untuk satu pengguna tertentu dengan parameter fungsi :
+
+| Parameter            | Penjelasan                                                 |
+| -------------------- | ---------------------------------------------------------- |
+| `user_id`            | ID pengguna yang ingin diberi rekomendasi                  |
+| `user_similarity_df` | DataFrame yang berisi skor kemiripan antar pengguna        |
+| `user_book_matrix`   | Matriks interaksi user–buku (misal: rating atau skor lain) |
+| `books`              | DataFrame berisi metadata buku (ISBN, Judul, Penulis)      |
+| `n`                  | Jumlah buku rekomendasi yang ingin ditampilkan             |
+
+
+## Kesimpulan
+Sistem rekomendasi berhasil memberikan saran buku personalisasi berdasarkan kesamaan dengan pengguna lain. Ini menunjukkan bahwa pendekatan user-based collaborative filtering berjalan dengan baik.
+
+Rekomendasi yang diberikan didasarkan pada rata-rata rating dari pengguna yang mirip, sehingga buku-buku yang muncul adalah yang secara konsisten disukai oleh kelompok pengguna dengan preferensi serupa.
+
+Hasil rekomendasi mencakup judul buku, pengarang, dan skor prediksi, yang memberi gambaran seberapa relevan atau populer buku tersebut bagi user target.
+
+==========
